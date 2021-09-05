@@ -1,0 +1,14 @@
+{% extends 'layouts.html' %}
+{% block content%}
+{% load crispy_forms_tags %}
+<div class="container">
+        <h2 align="center">ลงชื่อเข้าใช้ระบบ</h2>
+       <form method="post">
+            {% csrf_token %}
+            {{form | crispy}}
+            <input type="submit" value="Login" class="btn btn-success">
+       </form>
+</div>
+
+{% endblock %}
+

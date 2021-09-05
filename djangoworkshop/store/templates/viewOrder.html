@@ -1,0 +1,82 @@
+{% extends 'layouts.html' %}
+{% load static %}
+{% load humanize %}
+{% block content%}
+<div class="container">
+    <div class="row my-2">
+      <div class="col-md-12">
+      <div class="invoice-title text-right">
+          <h3>รหัสใบสั่งซื้อ # {{order.id}}</h3>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <address>
+          <strong>ผู้ขายสินค้า:</strong><br>
+            บริษัท
+            ก้องรักสยาม จำกัด<br>
+            ถนนลูกรัง อำเภอดาวหาง <br>
+            จังหวัดดาวอังคาร <br>
+            80000
+          </address>
+        </div>
+        <div class="col-md-6 text-right">
+          <address>
+            <strong>ผู้ซื้อสินค้า:</strong><br>
+            ชื่อ :{{order.name}}<br>
+            ที่อยู่ : {{order.address}}<br>
+            จังหวัด : {{order.city}}<br>
+            รหัสไปรษณีย์ : {{order.postcode}}
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong>รายการสั่งซื้อ</strong></h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-condensed">
+              <thead>
+                    <tr>
+                    <td><strong>ชื่อสินค้า</strong></td>
+                    <td class="text-center"><strong>ราคา</strong></td>
+                    <td class="text-center"><strong>จำนวน</strong></td>
+                    <td class="text-right"><strong>รวม</strong></td>
+                    </tr>
+              </thead>
+              <tbody>
+                {% for item in order_items%}
+                <tr>
+                  <td>{{item.product}}</td>
+                  <td class="text-center">{{item.price}}</td>
+                  <td class="text-center">{{item.quantity}}</td>
+                  <td class="text-right">{{item.sub_total | intcomma}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="no-line"></td>
+                    <td class="no-line text-center"></td>
+                    <td class="no-line text-center">ยอดชำระเงิน</td>
+                    <td class="no-line text-right">{{order.total | intcomma}}</td>
+                  </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary pull-right" onclick="window.print();">
+              <i class="fas fa-print"></i>
+              ปริ้นใบสั่งซื้อ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+{% endblock %}
+

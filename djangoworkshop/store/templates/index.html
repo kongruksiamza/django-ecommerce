@@ -1,0 +1,46 @@
+{% extends 'layouts.html' %}
+{% load static %}
+{% load humanize %}
+{% block content%}
+
+<div class="container">
+    <div class="row my-3">
+    {% for product in products %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="{{product.image.url}}" alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{{product.get_url}}">{{product.name}}</a>
+            </h4>
+            <h5>฿{{product.price|intcomma}}</h5>
+            <p class="card-text">{{product.description | slice:":150"}}</p>
+          </div>
+          <div class="card-footer">
+            {% if product.stock <= 0 %}
+                    <h5 class="text-danger">สินค้าหมด</h5>
+            {% else %}
+                <a href="{%url 'addCart' product.id %}" class="btn btn-primary">เพิ่มลงตะกร้า</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <nav aria-label="pagination">
+      {% if products.paginator.num_pages > 1 %}
+      <ul class="pagination">
+            {% for page_number in products.paginator.page_range %}
+              <li class="page-item
+              {% if products.number == page_number %}
+                    active
+              {% endif %}
+              "><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+            {% endfor %}
+      </ul>
+      {% endif %}
+    </nav>
+</div>
+
+{% endblock %}
+
