@@ -1,1 +1,1 @@
-# django-e-commerce
+# โค้ดประกอบการสอน Django Framework (E-Commerce)
